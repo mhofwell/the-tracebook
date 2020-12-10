@@ -1,0 +1,17 @@
+# Logs and databases #
+*.db
+*.sqlite3
+*.sqlite
+*.log
+
+# Ignore folders
+venv/
+
+# Ignore MAC system files
+.DS_store
+
+# Ignore junk files
+.querydump
+
+# Ignore .vscode debug and launch settings
+.vscode
