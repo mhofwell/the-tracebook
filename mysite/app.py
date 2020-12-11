@@ -23,16 +23,6 @@ app.config["TEMPLATES_AUTO_RELOAD"] = True
 # set a database constant
 DATABASE = "/contact_trace.db"
 
-# FIX NAVBAR ROUTES
-# FIX NAVBAR ROUTES
-# FIX NAVBAR ROUTES
-# FIX NAVBAR ROUTES
-# FIX NAVBAR ROUTES
-# FIX NAVBAR ROUTES
-# FIX NAVBAR ROUTES
-# FIX NAVBAR ROUTES
-# FIX NAVBAR ROUTES
-
 # set-up database helper
 
 
