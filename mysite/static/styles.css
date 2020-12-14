@@ -10154,7 +10154,30 @@ header.masthead h1 {
   background-size: cover;
 }
 
+.mast-accnt-home {
+  padding-top: 10rem;
+  padding-bottom: calc(10rem - 4.5rem);
+  background: linear-gradient(to bottom, rgba(2, 139, 55, 0.548) 0%, rgba(2, 139, 55, 0.548) 100%);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  background-size: cover;
+}
+
 .center {
   display: table;
   margin: auto;
+}
+
+.title {
+  padding-top: 10px; 
+  color: white; 
+}
+
+.button-add {
+  padding-top: 30px; 
+}
+
+.account-table {
+  color: white;
 }

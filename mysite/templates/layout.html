@@ -36,8 +36,9 @@
                     <li class="nav-item"><a class="nav-link js-scroll-trigger"><span>{{ sesssion.user['username']
                                 }}</span></a>
                     </li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#dashboard">Dashboard</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#settings">Settings</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#settings"></a>How it Works</li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#dashboard">Add a Location</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#settings"></a>Settings</li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{{ url_for('login') }}">Log
                             Out</a>
                     </li>
@@ -49,6 +50,8 @@
                             Up</a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{{ url_for('login') }}">Log
                             In</a>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger"
+                            href="{{ url_for('account') }}">Account</a></li>
                     </li>
                     {% endif %}
                 </ul>

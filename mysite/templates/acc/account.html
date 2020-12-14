@@ -1,0 +1,91 @@
+{% extends "layout.html" %}
+
+{% block main %}
+
+<header class="mast-accnt-home">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center justify-content-center text-center">
+            <div class="col-lg-10 align-self-end">
+                <table class="table table-striped account-table">
+                    <h2 class="title text-white font-weight-bold">Your Tracebooks</h2>
+                    <hr>
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Tracebook</th>
+                            <th scope="col">Location</th>
+                            <th scope="col">Entries</th>
+                            <th scope="col">Download</th>
+                            <th scope="col">QR Code</th>
+                            <th scope="col">Recorded Until</th>
+                            <th scope="col">Remove</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Dairy Queen</td>
+                            <td>31 Jack Dale Ave.</td>
+                            <td>52</td>
+                            <td>CSV</td>
+                            <td> 📱 </td>
+                            <td>11/21/2020</td>
+                            <td>❌</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Dairy Queen</td>
+                            <td>31 Jack Dale Ave.</td>
+                            <td>300</td>
+                            <td>CSV</td>
+                            <td> 📱 </td>
+                            <td>11/21/2020</td>
+                            <td>❌</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Dairy Queen</td>
+                            <td>31 Jack Dale Ave.</td>
+                            <td>26</td>
+                            <td>CSV</td>
+                            <td> 📱 </td>
+                            <td>11/21/2020</td>
+                            <td>❌</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="button-add">
+
+                    <button type="submit" class="btn btn-primary btn-xl js-scroll-trigger" href="#about">Add
+                        Location</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<section class="page-section" id="contact">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h2 class="mt-0">1-2-3</h2>
+                <hr class="divider my-4" />
+                <p class="text-muted mb-5">Ready to start your next project with us? Give us a call or send us an
+                    email and we will get back to you as soon as possible!</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 ml-auto text-center mb-5 mb-lg-0">
+                <i class="fas fa-phone fa-3x mb-3 text-muted"></i>
+                <div>+1 (555) 123-4567</div>
+            </div>
+            <div class="col-lg-4 mr-auto text-center">
+                <i class="fas fa-envelope fa-3x mb-3 text-muted"></i>
+                <!-- Make sure to change the email address in BOTH the anchor text and the link target below!-->
+                <a class="d-block" href="mailto:michael.hofweller@gmail.com">hello@tracebook.ca</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}
