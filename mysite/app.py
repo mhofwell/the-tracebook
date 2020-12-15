@@ -16,6 +16,8 @@ app = Flask(__name__)
 # Configure bootstrap with this application
 bootstrap = Bootstrap(app)
 
+# debug mode
+app.run(debug=True)
 
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -52,6 +54,14 @@ def query_db(query, args=(), one=False):
 # ensure database closes after the application request ends by watching the application-level data
 
 
+# prepare some reference data for accounts
+
+prov_list = ["AB", "BC", "MB", "ON", "QB",
+             "SK", "NFLD", "NS", "QB", "NWT", "YK"]
+
+prov_length = len(prov_list)
+
+
 @app.teardown_appcontext
 def close_connection(exception):
     db = getattr(g, '_database', None)
@@ -70,6 +80,7 @@ def after_request(response):
 
 
 # Configure session to use filesystem (instead of signed cookies)
+
 app.config["SESSION_FILE_DIR"] = mkdtemp()
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
@@ -106,7 +117,13 @@ def register():
 @app.route("/account.html", methods=["GET", "POST"])
 def account():
     if request.method == "GET":
-        return render_template("acc/account.html")
+        return render_template("acc/account.html", provinces=prov_list, length=prov_length)
+
+
+@app.route("/settings.html", methods=["GET", "POST"])
+def settings():
+    if request.method == "GET":
+        return render_template("acc/settings.html")
 
 
 @app.route("/login.html", methods=["GET", "POST"])
