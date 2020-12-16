@@ -7,7 +7,8 @@
             <div class="col-lg-10 align-self-end">
             </div>
             <div class="col-lg-4 align-self-baseline">
-                <form method="post">
+                <form action="login.html" method="post">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                     <div>
                         <h2 class="form-group text-white font-weight-bold">Log In &#128567</h2>
                     </div>
