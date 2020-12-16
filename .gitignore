@@ -15,3 +15,6 @@ venv/
 
 # Ignore .vscode debug and launch settings
 .vscode
+
+# Ignore sensitive data
+config.py
