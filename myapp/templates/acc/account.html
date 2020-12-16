@@ -1,0 +1,138 @@
+{% extends "layout.html" %}
+
+{% block main %}
+
+<header class="mast-accnt-home">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center justify-content-center text-center">
+            <div class="col-lg-10 align-self-end">
+                <table class="table table-striped account-table">
+                    <h2 class="title text-white font-weight-bold">Your Tracebooks</h2>
+                    <hr>
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Tracebook</th>
+                            <th scope="col">Location</th>
+                            <th scope="col">Entries</th>
+                            <th scope="col">Download</th>
+                            <th scope="col">QR Code</th>
+                            <th scope="col">Recorded Until</th>
+                            <th scope="col">Remove</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Dairy Queen</td>
+                            <td>31 Jack Dale Ave.</td>
+                            <td>52</td>
+                            <td>CSV</td>
+                            <td> 📱 </td>
+                            <td>11/21/2020</td>
+                            <td>❌</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Dairy Queen</td>
+                            <td>31 Jack Dale Ave.</td>
+                            <td>300</td>
+                            <td>CSV</td>
+                            <td> 📱 </td>
+                            <td>11/21/2020</td>
+                            <td>❌</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Dairy Queen</td>
+                            <td>31 Jack Dale Ave.</td>
+                            <td>26</td>
+                            <td>CSV</td>
+                            <td> 📱 </td>
+                            <td>11/21/2020</td>
+                            <td>❌</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="button-add">
+
+                    <a class="btn btn-primary mb-2 btn-lg js-scroll-trigger" href="#add">Add Location</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<section class="page-section" id="add">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center justify-content-center text-center">
+            <div class="col-lg-10 align-self-end">
+            </div>
+            <div class="col-lg-8 align-self-baseline">
+                <form method="post">
+                    <div>
+                        <h2 class="form-group text-black font-weight-bold">Add a Tracebook &#128567</h2>
+                    </div>
+                    <div class="form-group text-black font-weight-bold">
+                        <input type="email" name="email" class="form-control" id="email" placeholder="Wave's Coffee"
+                            required>
+                    </div>
+                    <div>
+                        <h5 class="form-group text-black font-weight-bold space">Details</h5>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6 text-black font-weight-bold">
+                            <label for="streetname">Street Name</label>
+                            <input type="streetname" name="streetname" class="form-control" id="streetname"
+                                placeholder="Main St" required>
+                        </div>
+                        <div class="form-group col-md-6 text-black font-weight-bold">
+                            <label for="streetnumber">Street Nnumber</label>
+                            <input type="streetnumber" name="streetnumber" class="form-control" id="streetnumber"
+                                placeholder="567" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6 text-black font-weight-bold">
+                            <label for="unitnumber">Unit Number</label>
+                            <input type="unitnumber" name="unitnumber" class="form-control" id="unitnumber"
+                                placeholder="5A" required>
+                        </div>
+                        <div class="form-group col-md-6 text-black font-weight-bold">
+                            <label for="city">City</label>
+                            <input type="city" class="form-control" id="city" placeholder="Vancouver" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6 text-black font-weight-bold">
+                            <label for="password">Province</label>
+                            <select class="form-control" name="symbol">
+                                {% set i = 0 %}
+                                {% for i in range(length) %}
+                                <option value="{{ provinces[i] }}">{{ provinces[i] }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6 text-black font-weight-bold">
+                            <label for="confpassword">Country</label>
+                            <input type="confpassword" class="form-control" id="confPassword" placeholder="CANADA"
+                                required disabled>
+                        </div>
+                        <div class="form-group col-md-6 text-black font-weight-bold">
+                            <label for="confpassword">Postal Code</label>
+                            <input type="confpassword" class="form-control" id="confPassword" placeholder="B4C4J9"
+                                required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                    </div>
+                    <button input type="submit" class="btn btn-primary mb-2 btn-lg js-scroll-trigger"
+                        href="#about">Add</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+
+
+{% endblock %}

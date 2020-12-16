@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Tracebook</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="static/favicon.ico" />
+    <!-- Font Awesome icons (free version)-->
+    <script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" crossorigin="anonymous"></script>
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic"
+        rel="stylesheet" type="text/css" />
+    <!-- Third party plugin CSS-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css"
+        rel="stylesheet" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body id="page-top">
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand js-scroll-trigger" href="/">The Tracebook</a>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto my-2 my-lg-0">
+                    {% if session.user_id %}
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger"><span>{{ sesssion.user['username']
+                                }}</span></a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#settings"></a>How it Works</li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#dashboard">Add a Location</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#settings"></a>Settings</li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{{ url_for('login') }}">Log
+                            Out</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#howitworks">How It Works</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/#contact">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{{ url_for('register') }}">Sign
+                            Up</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{{ url_for('login') }}">Log
+                            In</a>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger"
+                            href="{{ url_for('account') }}">Account</a></li>
+                    </li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger"
+                            href="{{ url_for('settings') }}">Settings</a></li>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    {% for message in get_flashed_messages() %}
+    <div class=flash>{{ message }}</div>
+    {% endfor %}
+    {% block main %}
+    {% endblock %}
+    <!-- Footer-->
+    <footer class="bg-light py-5">
+        <div class="container">
+            <div class="small text-center text-muted"><strong>Copyright © 2020 | Tracebook Inc | Made with &#10084
+                    in 🍁</strong>
+            </div>
+        </div>
+    </footer>
+    <!-- Bootstrap core JS-->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Third party plugin JS-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="static/scripts.js"></script>
+</body>
+
+</html>

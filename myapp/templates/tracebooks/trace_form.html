@@ -1,0 +1,57 @@
+{% extends "tracebooks/tracebook.html" %}
+
+{% block main %}
+<!-- Contact details form -->
+<section class="page-section" id="contact">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center justify-content-center text-left">
+            <div class="col-lg-6 align-self-baseline">
+                <div>
+                    <h2 class="form-group text-black text-center font-weight-bold">Please Leave Your Details Below!
+                    </h2>
+                </div>
+                <form method="post">
+                    <br>
+                    <div class="form-row">
+                        <div class="form-group col-md-6 text-black font-weight-bold">
+                            <label for="firstname">First Name</label>
+                            <input type="text" name="firstname" class="form-control" id="firstname" placeholder="Jim..."
+                                required>
+                        </div>
+                        <div class="form-group col-md-6 text-black font-weight-bold">
+                            <label for="lastname">Last Name</label>
+                            <input type="text" name="lastname" class="form-control" id="lastname" placeholder="Smith..."
+                                required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6 text-black font-weight-bold">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" name="phone" class="form-control" id="phone" placeholder="(123)..."
+                                required>
+                        </div>
+                        <div class="form-group col-md-3 text-black font-weight-bold">
+                            <label for="size">Party Size</label>
+                            <input type="number" name="size" class="form-control" id="size" placeholder="2" required>
+                        </div>
+                    </div>
+                    <div class="form-row text-black font-weight-bold">
+                        <label for="email">Email Address</label>
+                        <input type="email" name="email" class="form-control" id="email" placeholder="jim@..." required>
+                    </div>
+                    <br>
+                    <hr>
+                    <div class="form-row text-black font-weight-bold justify-content-center">
+                        <button input type="submit" class="btn btn-primary btn-lg js-scroll-trigger" href="#about"
+                            onclick="location.href='tracebooks/thank_you.html">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    function alert() { }
+</script>
+
+{% endblock %}
