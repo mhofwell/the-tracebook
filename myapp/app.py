@@ -2,14 +2,18 @@ from flask_wtf.csrf import CSRFProtect
 import flask_wtf
 import os
 import sqlite3
+import qrcode
 from flask_bootstrap import Bootstrap
-from datetime import date
+from datetime import date, datetime
 from flask import Flask, flash, jsonify, redirect, render_template, request, session, g
 from flask_session import Session
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
 from helpers import apology, login_required, lookup, usd
 from config import Config
+from time import perf_counter
+from PIL import Image
+from io import BytesIO
 
 """ Touch Ups
 
@@ -26,6 +30,10 @@ Create better database helper functions that ensure connections are closed and o
 
 Make notes on csrf and flask_wtf
 
+PYTHONPATH / PATH so "flask run" works and detects all the modules and config vars.
+
+Config.py & wsgi.py
+
 DO THE MEGA FLASK TUTORIAL
 
 """
@@ -35,7 +43,7 @@ DO THE MEGA FLASK TUTORIAL
 app = Flask(__name__)
 
 # see config.py for application configuration.
-app.config.from_object(Config)
+app.config.from_object('config.Config')
 
 # Cross-site request forgery protection
 csrf = CSRFProtect(app)
@@ -94,8 +102,13 @@ prov_list = ["AB", "BC", "MB", "ON", "QB",
 
 prov_length = len(prov_list)
 
+# prepare QR code
+
+qr_img = qrcode.make('http://www.tracebook.ca/trace_form.html')
+
 
 # Ensure responses aren't cached
+
 
 @app.after_request
 def after_request(response):
@@ -118,8 +131,6 @@ def register():
     if request.method == "GET":
         return render_template("auth/register.html")
     else:
-        firstname = request.form.get("firstname")
-        lastname = request.form.get("lastname")
         email = request.form.get("email")
         # Check email against database to see if user exists
         query = c.execute(
@@ -134,6 +145,8 @@ def register():
             if password != confirmation or not password or not confirmation:
                 return apology("Sorry passwords don't match!", 403)
             else:
+                firstname = request.form.get("firstname")
+                lastname = request.form.get("lastname")
                 pwHash = generate_password_hash(password)
                 insert_user = "INSERT INTO users (firstname, lastname, email, hash) VALUES(?, ?, ?, ?)"
                 values = (firstname, lastname, email, pwHash)
@@ -144,11 +157,48 @@ def register():
 
 @app.route("/trace_form.html", methods=["GET", "POST"])
 def get_tracebook_form():
+    today = date.today()
+    now = datetime.now()
+    date_textual = today.strftime("%B, %d, %Y")
+    time_textual = now.strftime("%-I:%M:%S")
+    date_f = today.strftime("%d, %m, %Y")
+    time = now.strftime("%H:%M:%S")
+
     if request.method == "GET":
-        return render_template("tracebooks/trace_form.html")
+        hours = int(now.strftime("%H"))
+        if (hours > 12):
+            time_textual = time_textual + " PM"
+        else:
+            time_textual = time_textual + " AM"
+
+        query = (
+            "SELECT book_number FROM locations")
+        tracebooks = query_db(query)
+
+        return render_template("tracebooks/trace_form.html", date=date_textual, tracebooks=tracebooks)
+
     else:
+        book_number = request.form.get("book_number")
+        firstname = request.form.get("firstname")
+        lastname = request.form.get("lastname")
+        email = request.form.get("email")
+        phone = request.form.get("phone")
+        party_size = request.form.get("size")
+
+        insert_user = "INSERT INTO log (book_number, date, time, firstname, lastname, email, phone, party_size) VALUES(?, ?, ?, ?, ?, ?, ?, ?)"
+        values = (book_number, date_f, time, firstname,
+                  lastname, email, phone, party_size)
+        c.execute(insert_user, values)
+        conn.commit()
+
         session.clear()
-        return render_template("/tracebooks/thank_you.html")
+
+        query = (
+            "SELECT tracebook_name FROM locations WHERE book_number = ?")
+        values = (book_number,)
+        book_select = query_db(query, values)
+
+        return render_template("/tracebooks/thank_you.html", book_number=book_number, tracebook=book_select)
 
 # Create the new location in the database
 
@@ -162,10 +212,59 @@ def get_tracebook_form():
 
 
 @app.route("/account.html", methods=["GET", "POST"])
-# @login_required
+@login_required
 def account():
     if request.method == "GET":
-        return render_template("acc/account.html", provinces=prov_list, length=prov_length)
+        user_id = session['user_id']
+        query = (
+            "SELECT tracebook_name, st_name, date FROM locations WHERE usr_id = ?")
+        value = (user_id,)
+        print(user_id)
+
+        c.execute(query, value)
+        tracebooks = c.fetchall()
+
+        if not tracebooks:
+            return render_template("acc/account.html", length=prov_length, provinces=prov_list)
+        else:
+            today = date.today()
+            last_date = 99/99/9999
+            #  date_textual = today.strftime("%B, %d, %Y")
+            # diff = date_textual - created_on
+
+            # if diff.days > 30:
+            #     last_date = date_textual - 30
+
+            # else:
+            #     last_date = created_on
+
+            return render_template("acc/account.html", tracebooks=tracebooks, last_date=last_date, length=prov_length, provinces=prov_list)
+    else:
+        # get the form data
+        usr_id = session['user_id']
+        tracebook_name = request.form.get("name")
+        st_num = request.form.get("streetnumber")
+        st_name = request.form.get("streetname")
+        unit_num = request.form.get("unitnumber")
+        city = request.form.get("city")
+        prov = request.form.get("province")
+        post = request.form.get("post")
+        country = "CANADA"
+        today = date.today()
+        date_textual = today.strftime("%B, %d, %Y")
+
+        insert_tracebook = "INSERT INTO locations (usr_id, tracebook_name, st_num, st_name, unit_num, city, prov, post, country, date) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        values = (usr_id, tracebook_name, st_num, st_name, unit_num,
+                  city, prov, post, country, date_textual)
+        c.execute(insert_tracebook, values)
+        conn.commit()
+
+        return redirect("/account.html")
+
+        img = Image.open(BytesIO(qr_img))
+        # validate the form data (?)
+
+        # push it to the database
 
 
 # make sure that if a user deletes an account, you remove the data from the db.  Drop every row from all tables that have that user_id.
@@ -199,8 +298,6 @@ def login():
             email_query = (form_email,)
             user = query_db(query, email_query)
 
-            print(user[0]['firstname'])
-
             if user[0]["email"] != form_email or not check_password_hash(user[0]["hash"], request.form.get("password")):
                 return apology("User not found!", 403)
 
@@ -208,7 +305,7 @@ def login():
             session["user_id"] = user[0]["_id"]
             firstname = user[0]["firstname"]
             # Redirect user to account page
-            return render_template("acc/account.html", name=firstname, provinces=prov_list, length=prov_length)
+            return redirect("/account.html")
 
 
 @app.route("/logout.html", methods=["GET", "POST"])

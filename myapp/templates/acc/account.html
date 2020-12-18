@@ -16,42 +16,22 @@
                             <th scope="col">Location</th>
                             <th scope="col">Entries</th>
                             <th scope="col">Download</th>
-                            <th scope="col">QR Code</th>
                             <th scope="col">Recorded Until</th>
                             <th scope="col">Remove</th>
                         </tr>
                     </thead>
+                    {% for tracebook in tracebooks %}
                     <tbody>
                         <tr>
                             <th scope="row">1</th>
-                            <td>Dairy Queen</td>
-                            <td>31 Jack Dale Ave.</td>
-                            <td>52</td>
-                            <td>CSV</td>
-                            <td> 📱 </td>
-                            <td>11/21/2020</td>
+                            <td>{{ tracebook[0] }}</td>
+                            <td>{{ tracebook[1] }}</td>
+                            <td>999</td>
+                            <td><a href="">CSV</td>
+                            <td>{{ last_date }}</td>
                             <td>❌</td>
                         </tr>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Dairy Queen</td>
-                            <td>31 Jack Dale Ave.</td>
-                            <td>300</td>
-                            <td>CSV</td>
-                            <td> 📱 </td>
-                            <td>11/21/2020</td>
-                            <td>❌</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Dairy Queen</td>
-                            <td>31 Jack Dale Ave.</td>
-                            <td>26</td>
-                            <td>CSV</td>
-                            <td> 📱 </td>
-                            <td>11/21/2020</td>
-                            <td>❌</td>
-                        </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
                 <div class="button-add">
@@ -68,12 +48,13 @@
             <div class="col-lg-10 align-self-end">
             </div>
             <div class="col-lg-8 align-self-baseline">
-                <form method="post">
+                <form action="account.html" method="post">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                     <div>
                         <h2 class="form-group text-black font-weight-bold">Add a Tracebook &#128567</h2>
                     </div>
                     <div class="form-group text-black font-weight-bold">
-                        <input type="email" name="email" class="form-control" id="email" placeholder="Wave's Coffee"
+                        <input type="text" name="name" class="form-control" id="name" placeholder="Wave's Coffee"
                             required>
                     </div>
                     <div>
@@ -86,7 +67,7 @@
                                 placeholder="Main St" required>
                         </div>
                         <div class="form-group col-md-6 text-black font-weight-bold">
-                            <label for="streetnumber">Street Nnumber</label>
+                            <label for="streetnumber">Street Number</label>
                             <input type="streetnumber" name="streetnumber" class="form-control" id="streetnumber"
                                 placeholder="567" required>
                         </div>
@@ -94,18 +75,19 @@
                     <div class="form-row">
                         <div class="form-group col-md-6 text-black font-weight-bold">
                             <label for="unitnumber">Unit Number</label>
-                            <input type="unitnumber" name="unitnumber" class="form-control" id="unitnumber"
-                                placeholder="5A" required>
+                            <input type="text" name="unitnumber" class="form-control" id="unitnumber" placeholder="5A"
+                                required>
                         </div>
                         <div class="form-group col-md-6 text-black font-weight-bold">
                             <label for="city">City</label>
-                            <input type="city" class="form-control" id="city" placeholder="Vancouver" required>
+                            <input type="city" name="city" class="form-control" id="city" placeholder="Vancouver"
+                                required>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6 text-black font-weight-bold">
                             <label for="password">Province</label>
-                            <select class="form-control" name="symbol">
+                            <select class="form-control" name="province">
                                 {% set i = 0 %}
                                 {% for i in range(length) %}
                                 <option value="{{ provinces[i] }}">{{ provinces[i] }}</option>
@@ -114,12 +96,12 @@
                         </div>
                         <div class="form-group col-md-6 text-black font-weight-bold">
                             <label for="confpassword">Country</label>
-                            <input type="confpassword" class="form-control" id="confPassword" placeholder="CANADA"
-                                required disabled>
+                            <input type="confpassword" name="country" class="form-control" id="confPassword"
+                                placeholder="CANADA" required disabled>
                         </div>
                         <div class="form-group col-md-6 text-black font-weight-bold">
-                            <label for="confpassword">Postal Code</label>
-                            <input type="confpassword" class="form-control" id="confPassword" placeholder="B4C4J9"
+                            <label for="post">Postal Code</label>
+                            <input type="postal" name="post" class="form-control" id="postal" placeholder="B4C4J9"
                                 required>
                         </div>
                     </div>
