@@ -6,37 +6,39 @@
     <div class="container h-100">
         <div class="row h-100 align-items-center justify-content-center text-center">
             <div class="col-lg-10 align-self-end">
-                <table class="table table-striped account-table">
+                <table class="table table-striped account-table table-responsive-md">
                     <h2 class="title text-white font-weight-bold">Your Tracebooks</h2>
                     <hr>
                     <thead>
                         <tr>
-                            <th scope="col">#</th>
                             <th scope="col">Tracebook</th>
+                            <th scope="col">#</th>
                             <th scope="col">Location</th>
                             <th scope="col">Entries</th>
                             <th scope="col">Download</th>
-                            <th scope="col">Recorded Until</th>
                             <th scope="col">Remove</th>
                         </tr>
                     </thead>
-                    {% for tracebook in tracebooks %}
                     <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>{{ tracebook[0] }}</td>
-                            <td>{{ tracebook[1] }}</td>
-                            <td>999</td>
-                            <td><a href="">CSV</td>
-                            <td>{{ last_date }}</td>
-                            <td>❌</td>
-                        </tr>
-                        {% endfor %}
+                        <form id="form" action="{{url_for('account')}}" method="POST">
+                            {% for tracebook in tracebooks %}
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                            <tr>
+                                <td>{{ tracebook[0] }}</td>
+                                <td>{{ tracebook[3] }}</td>
+                                <td>{{ tracebook[1] }}</td>
+                                <td>{{ tracebook[4] }}</td>
+                                <td><button input type="submit" name="csv" value="{{ tracebook[3] }}"
+                                        class="btn btn-primary mb-1 btn-sm js-scroll-trigger">CSV</button></td>
+                                <td><button input type="submit" name="delete" value="{{ tracebook[0] }}"
+                                        class="btn btn-primary mb-1 btn-sm js-scroll-trigger">x</button></td>
+                            </tr>
+                            {% endfor %}
+                        </form>
                     </tbody>
                 </table>
                 <div class="button-add">
-
-                    <a class="btn btn-primary mb-2 btn-lg js-scroll-trigger" href="#add">Add Location</a>
+                    <a class="btn btn-primary mb-2 btn-lg js-scroll-trigger" href="#add">Add Tracebook</a>
                 </div>
             </div>
         </div>
@@ -105,10 +107,10 @@
                                 required>
                         </div>
                     </div>
+                    <hr>
+                    <button input type="submit" class="btn btn-primary mb-2 btn-lg js-scroll-trigger">Add</button>
                     <div class="form-group">
                     </div>
-                    <button input type="submit" class="btn btn-primary mb-2 btn-lg js-scroll-trigger"
-                        href="#about">Add</button>
                 </form>
             </div>
         </div>

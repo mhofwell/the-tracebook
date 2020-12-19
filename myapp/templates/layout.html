@@ -40,6 +40,13 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto my-2 my-lg-0">
                     {% if session.user_id %}
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="http://www.google.ca"
+                            target="_blank"><span>QR
+                                Code</span></a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/trace_form.html"
+                            target="_blank">Trace Form</a>
+                    </li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger"
                             href="{{ url_for('settings') }}"><span>Settings</span></a>
                     </li>

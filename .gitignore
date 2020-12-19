@@ -18,3 +18,7 @@ venv/
 
 # Ignore sensitive data
 config.py
+
+# Ignore CSVs
+
+static/csv

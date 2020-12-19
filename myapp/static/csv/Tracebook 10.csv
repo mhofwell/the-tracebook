@@ -1,0 +1,18 @@
+log_id,book_number,date,time,firstname,lastname,email,phone,party_size
+7,10,"18, 12, 2020",17:44:49,Michael,Hofweller,michael.hofweller@gmail.com,14167387140,3
+8,10,"18, 12, 2020",17:46:06,Michael,Hofweller,michael.hofweller@gmail.com,14167387140,2
+9,10,"18, 12, 2020",17:46:43,Michael,Hofweller,michael.hofweller@gmail.com,14167387140,2
+10,10,"18, 12, 2020",17:48:14,Michael,Hofweller,michael.hofweller@gmail.com,14167387140,2
+11,10,"18, 12, 2020",17:48:40,Michael,Hofweller,michael.hofweller@gmail.com,14167387140,2
+13,10,"18, 12, 2020",17:50:16,Michael,Hofweller,michael.hofweller@gmail.com,14167387140,2
+14,10,"18, 12, 2020",17:55:53,Michael,Hofweller,michael.hofweller@gmail.com,14167387140,2
+15,10,"18, 12, 2020",17:57:30,Michael,Hofweller,michael.hofweller@gmail.com,14167387140,2
+16,10,"18, 12, 2020",17:58:22,Michael,Hofweller,michael.hofweller@gmail.com,14167387140,2
+17,10,"18, 12, 2020",17:58:56,Michael,Hofweller,michael.hofweller@gmail.com,14167387140,2
+18,10,"18, 12, 2020",17:59:41,Michael,Hofweller,michael.hofweller@gmail.com,14167387140,2
+19,10,"18, 12, 2020",18:00:44,Michael,Hofweller,michael.hofweller@gmail.com,14167387140,2
+20,10,"18, 12, 2020",18:01:08,Michael,Hofweller,michael.hofweller@gmail.com,14167387140,2
+21,10,"18, 12, 2020",18:01:32,Michael,Hofweller,michael.hofweller@gmail.com,14167387140,12
+22,10,"18, 12, 2020",18:01:54,Michael,Hofweller,michael.hofweller@gmail.com,14167387140,2
+23,10,"18, 12, 2020",18:02:13,Michael,Hofweller,michael.hofweller@gmail.com,14167387140,2
+24,10,"18, 12, 2020",18:02:47,Michael,Hofweller,michael.hofweller@gmail.com,14167387140,2

@@ -11,23 +11,20 @@
                     <hr>
                     <thead>
                         <tr>
-                            <th scope="col">#</th>
                             <th scope="col">First</th>
                             <th scope="col">Last</th>
                             <th scope="col">Email</th>
                             <th scope="col">Tracebooks</th>
-                            <th scope="col">Date Created</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <th scope="row">1</th>
-                            <td>Michael</td>
-                            <td>Hofweller</td>
-                            <td>michael.hofweller@gmail.com</td>
-                            <td>2</td>
-                            <td>11/21/2020</td>
+                            <td>{{ user[0] }}</td>
+                            <td>{{ user[1] }}</td>
+                            <td>{{ user[2] }}</td>
+                            <td>{{ count[0] }}</td>
                         </tr>
+                        </form>
                     </tbody>
                 </table>
                 <div class="button-add">
@@ -42,12 +39,13 @@
     <div class="container h-100">
         <div class="row h-100 align-items-center justify-content-center text-center">
             <div class="col-lg-8 align-self-baseline">
-                <form method="post" class="form-responsive-md">
-                    <div>
-                        <h2 class="form-group text-black font-weight-bold space">Edit Details &#128567</h2>
-                    </div>
-                    <hr>
+                <div>
+                    <h2 class="form-group text-black font-weight-bold space">Edit Details &#128567</h2>
+                </div>
+                <hr>
 
+                <form action="{{url_for('settings')}}" method="POST" class="form-responsive-md">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                     <div class="form-row justify-content-center">
                         <div class="form-group col-md-2 text-black font-weight-bold text-left">
                             <label for="firstname">First Name</label>
@@ -57,10 +55,12 @@
                                 required>
                         </div>
                         <div class="form-group col-md-2 text-white font-weight-bold">
-                            <button type="submit" class="btn btn-primary btn-md js-scroll-trigger"
-                                href="#about">Update</button>
+                            <button type="submit" class="btn btn-primary btn-md js-scroll-trigger">Update</button>
                         </div>
                     </div>
+                </form>
+                <form action="{{url_for('settings')}}" method="POST" class="form-responsive-md">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                     <div class="form-row justify-content-center">
                         <div class="form-group col-md-2 text-black font-weight-bold text-left">
                             <label for="lastname">Last Name</label>
@@ -74,6 +74,9 @@
                                 href="#about">Update</button>
                         </div>
                     </div>
+                </form>
+                <form action="{{url_for('settings')}}" method="POST" class="form-responsive-md">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                     <div class="form-row justify-content-center">
                         <div class="form-group col-md-2 text-black font-weight-bold text-left">
                             <label for="email">Email</label>
@@ -87,6 +90,9 @@
                                 href="#about">Update</button>
                         </div>
                     </div>
+                </form>
+                <form action="{{url_for('settings')}}" method="POST" class="form-responsive-md">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                     <div class="form-row justify-content-center">
                         <div class="form-group col-md-2 text-black font-weight-bold text-left">
                             <label for="password">Password</label>
@@ -100,9 +106,13 @@
                                 href="#about">Update</button>
                         </div>
                     </div>
-                    <hr>
+                </form>
+                <hr>
+                <form action="{{url_for('settings')}}" method="POST" class="form-responsive-md">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                     <div class="space">
-                        <button type="submit" class="btn btn-primary btn-md js-scroll-trigger" href="#about">Delete My
+                        <button type="submit" name="delete_account" value="{{ usr_id }}" class=" btn btn-primary btn-md
+                        js-scroll-trigger" href="#about">Delete My
                             Account</button>
                     </div>
                 </form>
