@@ -12,7 +12,6 @@ from flask_session import Session
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
 from helpers import apology, login_required, lookup, usd
-from config import Config
 from time import perf_counter
 from PIL import Image
 from io import BytesIO
@@ -59,6 +58,19 @@ csrf = CSRFProtect(app)
 
 # Enable bootstrap with this application
 bootstrap = Bootstrap(app)
+
+
+class Config:
+    SECRET_KEY = os.environ.get('SECRET_KEY') or 'you-wont-guess'
+    FLASK_ENV = 'development'
+    FLASK_DEBUG = 1
+    TESTING = True
+    TEMPLATES_AUTO_RELOAD = True
+    SESSION_FILE_DIR = mkdtemp()
+    SESSION_PERMANENT = False
+    # Configure session to use filesystem (instead of signed cookies)
+    SESSION_TYPE = "filesystem"
+
 
 # Configure sessions & use filesystem (instead of signed cookies)
 Session(app)
