@@ -1,6 +1,6 @@
 import sqlite3
 from functools import wraps
-from flask import redirect, render_template, request, session
+from flask import redirect, render_template, request, session, g
 import urllib.parse
 import requests
 import os
@@ -62,3 +62,9 @@ def lookup(symbol):
 def usd(value):
     """Format value as USD."""
     return f"${value:,.2f}"
+
+# use of query helper
+# https://www.kite.com/python/docs/sqlite3.Connection.row_factory
+
+# for user in query_db('select * from users'):
+#     print user['username'], 'has the id', user['user_id']

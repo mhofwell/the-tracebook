@@ -1,11 +1,13 @@
 from flask_wtf.csrf import CSRFProtect
 import flask_wtf
 import os
+from os import path
+import os.path
 import sqlite3
 import csv
 from flask_bootstrap import Bootstrap
 from datetime import date, datetime
-from flask import abort, Flask, flash, jsonify, redirect, render_template, request, session, g, send_file, send_from_directory
+from flask import abort, Flask, safe_join, flash, jsonify, redirect, render_template, request, session, g, send_file, send_from_directory, abort
 from flask_session import Session
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -39,7 +41,7 @@ DO THE MEGA FLASK TUTORIAL
 
 # Error flash messages instead of apology, keep state of the app, no refresh.
 
-# tuples vs lists vs dicts and when to use each. 
+# tuples vs lists vs dicts and when to use each.
 
 # research cursor object
 
@@ -62,24 +64,16 @@ bootstrap = Bootstrap(app)
 Session(app)
 
 # Config csv directory
-app.config["CLIENT_CSV"] = "/static/csv"
+app.config["CLIENT_CSV"] = "myapp/static/client/csv/"
+app.config["ABS_PATH_CSV"] = "/Users/hofweller/Documents/GitHub/pyProject_flask/myapp/static/client/csv/"
 
 # set a database constant
-DATABASE = "contact_trace.db"
+DATABASE = "myapp/contact_trace.db"
 
-# set-up database helper
+# set a database constant for running the prog from primary directory
+# DATABASE = "myapp/contact_trace.db"
 
-conn = sqlite3.connect(DATABASE)
-c = conn.cursor()
-
-# ensure database closes after the application request ends by watching the application-level data
-
-
-@app.teardown_appcontext
-def close_connection(exception):
-    db = getattr(g, '_database', None)
-    if db is not None:
-        db.close()
+# database helper
 
 
 def get_db():
@@ -102,17 +96,25 @@ def query_db(query, args=(), one=False):
 
 
 def delete_entry(tracebook_name):
+    # set-up database helper
+    conn = sqlite3.connect(DATABASE)
+    c = conn.cursor()
+
     query = ("DELETE FROM locations where tracebook_name=?")
     value = (tracebook_name,)
     c.execute(query, value)
     conn.commit()
     return
 
-# use of query helper
-# https://www.kite.com/python/docs/sqlite3.Connection.row_factory
 
-# for user in query_db('select * from users'):
-#     print user['username'], 'has the id', user['user_id']
+# ensure database closes after the application request ends by watching the application-level data
+
+
+@app.teardown_appcontext
+def close_connection(exception):
+    db = getattr(g, '_database', None)
+    if db is not None:
+        db.close()
 
 
 # prepare some reference data for accounts
@@ -143,6 +145,9 @@ def register():
     if request.method == "GET":
         return render_template("auth/register.html")
     else:
+        # set-up database helper
+        conn = sqlite3.connect(DATABASE)
+        c = conn.cursor()
         email = request.form.get("email")
         # Check email against database to see if user exists
         query = c.execute(
@@ -169,6 +174,10 @@ def register():
 
 @app.route("/trace_form.html", methods=["GET", "POST"])
 def get_tracebook_form():
+    # set-up database helper
+    conn = sqlite3.connect(DATABASE)
+    c = conn.cursor()
+
     today = date.today()
     now = datetime.now()
     date_textual = today.strftime("%B, %d, %Y")
@@ -218,6 +227,9 @@ def get_tracebook_form():
 @app.route("/account.html", methods=["GET", "POST"])
 @login_required
 def account():
+    # set-up database helper
+    conn = sqlite3.connect(DATABASE)
+    c = conn.cursor()
     if request.method == "GET":
         usr_id = session['user_id']
         query = (
@@ -259,26 +271,47 @@ def account():
             print("CSV")
             book_num = request.form.get('csv')
             print(book_num)
+            csv_name = str("Tracebook " + book_num + ".csv")
+            print(csv_name)
+            path = app.config['CLIENT_CSV']+csv_name
+            path = path.strip()
+            print(path)
+            if os.path.exists(path):
+                try:
+                    os.remove(path)
+                except OSError as e:  # name the Exception `e`
+                    print("Failed with:", e.strerror)  # look what it says
+
             # get all of the rows
             query = (
                 "SELECT * FROM log WHERE book_number=?")
             value = (book_num,)
             c.execute(query, value)
             logs = c.fetchall()
-            print("Exporting data to csv.....")
-            with open(f"Tracebook {book_num}.csv", "w") as csv_file:
-                csv_writer = csv.writer(csv_file, delimiter=",")
-                csv_writer.writerow([i[0] for i in c.description])
-                for log in logs:
-                    csv_writer.writerow(log)
-            print("Moving the csv")
-            shutil.move(f"Tracebook {book_num}.csv", "static/csv")
-            print("Sending the csv")
-            try:
-                return send_from_directory(
-                    app.config["CLIENT_CSV"], f"Tracebook {book_num}", as_attachment=True)
-            except:
-                return apology("Couldn't send file!")
+            if logs:
+                print("Exporting data to csv.....")
+                # set-up a send_file with not a format string.  Save filename to variable.
+                with open(f"Tracebook {book_num}.csv", "w") as csv_file:
+                    csv_writer = csv.writer(csv_file, delimiter=",")
+                    csv_writer.writerow([i[0] for i in c.description])
+                    for log in logs:
+                        csv_writer.writerow(log)
+                print("Moving the csv")
+                try:
+                    shutil.move(f"Tracebook {book_num}.csv",
+                                "myapp/static/client/csv")
+                except:
+                    print("Could not move")
+
+                try:
+                    dir_path = app.config['ABS_PATH_CSV']
+                    print("Sending the csv")
+                    print(dir_path)
+                    return send_from_directory(dir_path, f"Tracebook {book_num}.csv", as_attachment=True)
+                except OSError as e:
+                    return print("Failed with:", e.strerror)
+            else:
+                return redirect("account.html")
         else:
             usr_id = session['user_id']
             tracebook_name = request.form.get("name")
@@ -316,10 +349,14 @@ def account():
 # make sure that if a user deletes an account, you remove the data from the db.  Drop every row from all tables that have that user_id.
 
 
-@ app.route("/settings.html", methods=["GET", "POST"])
-@ login_required
+@app.route("/settings.html", methods=["GET", "POST"])
+@login_required
 def settings():
+    # set-up database helper
+    conn = sqlite3.connect(DATABASE)
+    c = conn.cursor()
     usr_id = session['user_id']
+
     if request.method == "GET":
         query = (
             "SELECT firstname, lastname, email FROM users WHERE _id = ?")
@@ -382,7 +419,7 @@ def settings():
             return redirect("/")
 
 
-@ app.route("/login.html", methods=["GET", "POST"])
+@app.route("/login.html", methods=["GET", "POST"])
 def login():
     if request.method == "GET":
         return render_template("auth/login.html")
@@ -415,8 +452,8 @@ def login():
                 return redirect("/login.html")
 
 
-@ app.route("/logout.html", methods=["GET", "POST"])
-@ login_required
+@app.route("/logout.html", methods=["GET", "POST"])
+@login_required
 def logout():
     if request.method == "GET":
         session.clear()
@@ -433,9 +470,3 @@ def errorhandler(e):
 # Listen for errors
 for code in default_exceptions:
     app.errorhandler(code)(errorhandler)
-
-    # make info into a dict with those tips?
-    # cur = get_db().cursor()
-    # rows = cur.execute()
-    # for row in rows:
-    #     print(row)

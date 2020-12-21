@@ -4,6 +4,10 @@
 *.sqlite
 *.log
 
+# CSVs
+
+*.csv
+
 # Ignore folders
 venv/
 
@@ -21,4 +25,4 @@ config.py
 
 # Ignore CSVs
 
-static/csv
+myapp/static/csv

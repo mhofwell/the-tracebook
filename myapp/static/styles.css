@@ -10186,3 +10186,19 @@ header.masthead h1 {
   padding-top: 20px; 
   padding-bottom: 10px; 
 }
+
+.bk-gray {
+  background-color: rgb(240, 239, 239);
+}
+
+.trace-img {
+  background: linear-gradient(to bottom, rgba(2, 139, 55, 0.548) 0%, rgba(2, 139, 55, 0.548) 100%), url("/static/bg-masthead.jpg");
+}
+
+.trace-img-brown {
+  background: linear-gradient(to bottom, rgba(92, 77, 66, 0.8) 0%, rgba(92, 77, 66, 0.8) 100%), url("/static/bg-masthead.jpg");
+}
+
+.trace-img-white {
+  background: linear-gradient(to bottom, rgba(236, 236, 236, 0.8) 0%, rgba(255, 255, 255, 0.8) 100%), url("/static/bg-masthead.jpg");
+}

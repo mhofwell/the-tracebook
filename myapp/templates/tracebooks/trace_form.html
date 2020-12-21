@@ -1,13 +1,13 @@
 {% extends "tracebooks/tracebook.html" %}
 
 {% block datetime %}
-<p><strong>{{ date }} | {{ time }} </strong></p>
+<p><strong>{{ date }} </strong></p>
 {% endblock %}
 
 
 {% block main %}
 <!-- Contact details form -->
-<section class="page-section" id="contact">
+<section class="page-section trace-img-white" id="contact">
     <div class="container h-100">
         <div class="row h-100 align-items-center justify-content-center text-left">
             <div class="col-lg-6 align-self-baseline">
@@ -48,7 +48,7 @@
                             <input type="number" name="size" class="form-control" id="size" placeholder="2.." required>
                         </div>
                         <div class="form-group col-md-5 text-black font-weight-bold">
-                            <label for="book_number">Book Number</label>
+                            <label for="book_number">Tracebook Number</label>
                             <input type="number" name="book_number" class="form-control" id="size" placeholder="23.."
                                 required>
                         </div>
@@ -64,12 +64,6 @@
         </div>
     </div>
 </section>
-<script>
-
-    let tracebooks = {{ tracebooks }};
-
-    console.log(tracebooks);
-</script>
 
 {% endblock %}
 
