@@ -1,7 +1,7 @@
 # Logs and databases #
-*.db
-*.sqlite3
-*.sqlite
+# .db
+# .sqlite3
+# *.sqlite
 *.log
 
 # CSVs
@@ -21,8 +21,8 @@ venv/
 .vscode
 
 # Ignore sensitive data
-config.py
+# config.py
 
 # Ignore CSVs
 
-myapp/static/csv
+# myapp/static/csv
