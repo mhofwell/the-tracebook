@@ -66,6 +66,7 @@ Session(app)
 # Config csv directory
 app.config["CLIENT_CSV"] = "myapp/static/client/csv/"
 app.config["ABS_PATH_CSV"] = "/Users/hofweller/Documents/GitHub/pyProject_flask/myapp/static/client/csv/"
+app.config["QR_PATH"] = "/Users/hofweller/Documents/GitHub/pyProject_flask/myapp/static/qr"
 
 # set a database constant
 DATABASE = "myapp/contact_trace.db"
@@ -206,22 +207,35 @@ def get_tracebook_form():
         phone = request.form.get("phone")
         party_size = request.form.get("size")
 
-        insert_user = "INSERT INTO log (book_number, date, time, firstname, lastname, email, phone, party_size) VALUES(?, ?, ?, ?, ?, ?, ?, ?)"
-        values = (book_number, date_f, time, firstname,
-                  lastname, email, phone, party_size)
-        c.execute(insert_user, values)
-        conn.commit()
-
-        session.clear()
-
         query = (
             "SELECT tracebook_name FROM locations WHERE book_number = ?")
         values = (book_number,)
         c.execute(query, values)
         book_name = c.fetchall()
-        print(book_name[0])
+        length_book_name = len(book_name)
 
-        return render_template("/tracebooks/thank_you.html", book_number=book_number, tracebook=book_name[0][0])
+        if length_book_name > 0:
+            insert_user = "INSERT INTO log (book_number, date, time, firstname, lastname, email, phone, party_size) VALUES(?, ?, ?, ?, ?, ?, ?, ?)"
+            values = (book_number, date_f, time, firstname,
+                      lastname, email, phone, party_size)
+            c.execute(insert_user, values)
+            conn.commit()
+            session.clear()
+            return render_template("/tracebooks/thank_you.html", book_number=book_number, tracebook=book_name[0][0])
+        else:
+            return redirect("trace_form.html")
+
+
+@app.route("/qr.html", methods=["GET", "POST"])
+@login_required
+def get_qr():
+    try:
+        dir_path = app.config['QR_PATH']
+        print("Sending the qr")
+        print(dir_path)
+        return send_from_directory(dir_path, "qr-code.png", as_attachment=True)
+    except OSError as e:
+        return print("Failed with:", e.strerror)
 
 
 @app.route("/account.html", methods=["GET", "POST"])

@@ -40,8 +40,7 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto my-2 my-lg-0">
                     {% if session.user_id %}
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="http://www.google.ca"
-                            target="_blank"><span>QR
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/qr.html"><span>QR
                                 Code</span></a>
                     </li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/trace_form.html"
@@ -54,7 +53,7 @@
                             Out</a>
                     </li>
                     {% else %}
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#howitworks">How It Works</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/#howitworks">How It Works</a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/#contact">Contact</a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{{ url_for('register') }}">Sign
                             Up</a></li>
@@ -74,7 +73,7 @@
     <footer class="bg-light py-5">
         <div class="container">
             <div class="small text-center text-muted"><strong>Copyright © 2020 | Tracebook Inc | Made with &#10084
-                    in 🍁</strong>
+                    in Vancouver 🍁</strong>
             </div>
         </div>
     </footer>
