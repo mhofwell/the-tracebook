@@ -71,9 +71,6 @@ app.config["QR_PATH"] = "/Users/hofweller/Documents/GitHub/pyProject_flask/myapp
 # set a database constant
 DATABASE = "myapp/contact_trace.db"
 
-# set a database constant for running the prog from primary directory
-# DATABASE = "myapp/contact_trace.db"
-
 # database helper
 
 
